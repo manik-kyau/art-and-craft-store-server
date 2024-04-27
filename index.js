@@ -42,6 +42,18 @@ async function run() {
       const result = await craftCollection.insertOne(newCraft);
       res.send(result)
     })
+
+    // read data for My Craft list
+    app.get("/myArtAndCraft/:userEmail",async(req,res)=>{
+      console.log(req.params.email);
+      // const userEmail = req.params.email;
+      const result = await craftCollection.find({email:req.params.email}).toArray();
+      res.send(result)
+    })
+
+
+
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
