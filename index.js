@@ -43,6 +43,17 @@ async function run() {
       res.send(result)
     })
 
+    // delete craft
+    app.delete('/crafts/:id',async(req,res)=>{
+      const id =req.params.id;
+      const query = { _id: new Object(id)}
+      const result = await craftCollection.deleteOne(query);
+      res.send(result);
+    })
+
+    // Update craft data
+    // app.get()
+
     // read data for My Craft list
     app.get("/myArtAndCraft/:userEmail",async(req,res)=>{
       console.log(req.params.email);
