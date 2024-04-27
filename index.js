@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -35,6 +35,14 @@ async function run() {
       res.send(result);
     })
 
+    // Update craft data
+    // app.get('/crafts/:id',async(req,res)=>{
+    //   const id = req.params.id;
+    //   const query = {_id: new ObjectId(id)}
+    //   const result = await craftCollection.findOne(query);
+    //   res.send(result);
+    // })
+
     // post craft
     app.post('/crafts',async(req,res)=>{
       const newCraft = req.body;
@@ -42,17 +50,6 @@ async function run() {
       const result = await craftCollection.insertOne(newCraft);
       res.send(result)
     })
-
-    // delete craft
-    app.delete('/crafts/:id',async(req,res)=>{
-      const id =req.params.id;
-      const query = { _id: new Object(id)}
-      const result = await craftCollection.deleteOne(query);
-      res.send(result);
-    })
-
-    // Update craft data
-    // app.get()
 
     // read data for My Craft list
     app.get("/myArtAndCraft/:userEmail",async(req,res)=>{
@@ -62,8 +59,20 @@ async function run() {
       res.send(result)
     })
 
+    // Update craft data
+    app.get("/singleCraft/:id",async(req,res)=>{
+      const result = await craftCollection.findOne({_id: new ObjectId(req.params.id)})
+      console.log("fokira website",result);
+      res.send(result);
+    })
 
-
+     // delete craft
+     app.delete('/crafts/:id',async(req,res)=>{
+      const id =req.params.id;
+      const query = { _id: new ObjectId(id)}
+      const result = await craftCollection.deleteOne(query);
+      res.send(result);
+    })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
