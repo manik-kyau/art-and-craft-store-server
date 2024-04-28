@@ -27,6 +27,7 @@ async function run() {
 
     // const database = client.db("sample_mflix");
     const craftCollection = client.db("craftsDB").collection("crafts");
+    const userCollection = client.db("usersDB").collection("users");
 
     // get craft data
     app.get('/crafts',async(req,res)=>{
@@ -34,14 +35,6 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     })
-
-    // Update craft data
-    // app.get('/crafts/:id',async(req,res)=>{
-    //   const id = req.params.id;
-    //   const query = {_id: new ObjectId(id)}
-    //   const result = await craftCollection.findOne(query);
-    //   res.send(result);
-    // })
 
     // post craft
     app.post('/crafts',async(req,res)=>{
@@ -95,6 +88,16 @@ async function run() {
       const query = { _id: new ObjectId(id)}
       const result = await craftCollection.deleteOne(query);
       res.send(result);
+    })
+
+
+    // User related API
+    app.post('/users',async(req,res)=>{
+      const user = req.body;
+      console.log(user);
+      const result = await userCollection.insertOne(user);
+      res.send(result);
+
     })
 
     // Send a ping to confirm a successful connection
