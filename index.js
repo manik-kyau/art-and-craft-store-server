@@ -25,7 +25,7 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
 
-    // const database = client.db("sample_mflix");
+
     const craftCollection = client.db("craftsDB").collection("crafts");
     const userCollection = client.db("usersDB").collection("users");
 
@@ -39,7 +39,7 @@ async function run() {
     // post craft
     app.post('/crafts',async(req,res)=>{
       const newCraft = req.body;
-      console.log(newCraft);
+      console.log('sfsdfsdfs-----3',newCraft);
       const result = await craftCollection.insertOne(newCraft);
       res.send(result)
     })
@@ -51,11 +51,11 @@ async function run() {
       const result = await craftCollection.find({email:req.params.email}).toArray();
       res.send(result)
     })
-  // fdghf
+
     // Update craft data
     app.get("/singleCraft/:id",async(req,res)=>{
       const result = await craftCollection.findOne({_id: new ObjectId(req.params.id)})
-      console.log("fokira website",result);
+      console.log(result);
       res.send(result);
     })
 
